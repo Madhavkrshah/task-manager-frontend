@@ -20,22 +20,20 @@ export const AuthProvider = ({ children }) => {
   };
 
   // -- Load user from token (called on mount) -----------
-  const loadUser = async () => {
-    if (!token) {
-      setLoading(false);
-      return;
-    }
+  const loadUser =  () => {
+    const storedUser = localStorage.getItem('user');
+    const storedToken = localStorage.getItem('token');
 
-    try {
-      const { data } = await api.get("/auth/me"); // your "get current user" endpoint
-      setUser(data.user ?? data); // handle {user: {...}} or
-    } catch (error) {
-      // token is invalid / expired - clean up silently
-      clearToken();
-      setUser(null);
-    } finally {
-      setLoading(false);
+    if(storedToken && storedUser){
+      try{
+        setUser(JSON.parse(storedUser));
+        setToken(storedToken);
+      } catch {
+        // corrupted data - clean up
+        clearAuth();
+      }
     }
+    setLoading(false);
   };
 
   useEffect(() => {
