@@ -67,7 +67,7 @@ export const AuthProvider = ({ children }) => {
     setLoading(true);
     try {
       const { data } = await api.post("/auth/register", {
-        name,
+        username: name,
         email,
         password,
       });
