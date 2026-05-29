@@ -2,13 +2,13 @@ import axios from "axios";
 
 // 1. Create the Axios instance
 const api = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: "https://task-manager-backend-xa86.onrender.com",
   headers: {
     "Content-Type": "application/json",
   },
 });
 
-// 2. Request Interceptor - runs before every request is sent
+// 2. Request Interceptor runs before every request is sent
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("token"); // read token
