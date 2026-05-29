@@ -1,8 +1,9 @@
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import api from "../services/api";
 import Navbar from "../components/Navbar";
 import TaskForm from "../components/TaskForm";
+import TaskList from "../components/TaskList";
 
 const FILTERS = ["all", "pending", "completed"];
 
@@ -51,9 +52,7 @@ function Dashboard() {
     try {
       const { data } = await api.put(`/tasks/${id}`, updatedFields);
       // Sync with server response
-      setTasks((prev) =>
-        prev.map((t) => (t._id === id ? data.data : t)),
-      );
+      setTasks((prev) => prev.map((t) => (t._id === id ? data.data : t)));
       toast.success("Task updated");
     } catch (error) {
       // update on failure
